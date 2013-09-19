@@ -16,7 +16,6 @@ import static org.rkutil.jdaemon.DaemonOptions.*;
 
 public class Daemon {
 	public static void main(String[] s) throws Exception {
-		List<String> vmArgs = ManagementFactory.getRuntimeMXBean().getInputArguments();
 		List<String> daemonArgs = new ArrayList<String>();
 		List<String> toolArgs = new ArrayList<String>(Arrays.asList(s));
 		
@@ -51,7 +50,7 @@ public class Daemon {
 		}
 
 		if(!cli.hasOption(FOREGROUND)) {
-			fork(vmArgs, daemonArgs, toolArgs);
+			fork(daemonArgs, toolArgs);
 			return;
 		}
 		
@@ -74,7 +73,12 @@ public class Daemon {
 		toolMain.invoke(null, new Object[] { toolArgs.toArray(new String[0]) });
 	}
 	
-	private static Process fork(List<String> vmArgs, List<String> daemonArgs, List<String> appArgs) throws Exception {
+	private static Process fork(List<String> daemonArgs, List<String> appArgs) throws Exception {
+		List<String> vmArgs = ManagementFactory.getRuntimeMXBean().getInputArguments();
+		vmArgs.add("-cp");
+		vmArgs.add(ManagementFactory.getRuntimeMXBean().getClassPath());
+		vmArgs.add(Daemon.class.getName());
+		
 		daemonArgs = new ArrayList<String>(daemonArgs);
 		daemonArgs.add(0, "--" + FOREGROUND);
 		
