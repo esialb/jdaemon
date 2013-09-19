@@ -74,7 +74,7 @@ public class Daemon {
 	}
 	
 	private static Process fork(List<String> daemonArgs, List<String> appArgs) throws Exception {
-		List<String> vmArgs = ManagementFactory.getRuntimeMXBean().getInputArguments();
+		List<String> vmArgs = new ArrayList<String>(ManagementFactory.getRuntimeMXBean().getInputArguments());
 		vmArgs.add("-cp");
 		vmArgs.add(ManagementFactory.getRuntimeMXBean().getClassPath());
 		vmArgs.add(Daemon.class.getName());
