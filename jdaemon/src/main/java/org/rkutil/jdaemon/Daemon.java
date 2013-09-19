@@ -81,6 +81,7 @@ public class Daemon {
 		
 		daemonArgs = new ArrayList<String>(daemonArgs);
 		daemonArgs.add(0, "--" + FOREGROUND);
+		daemonArgs.add(0, "--" + QUIET);
 		
 		List<String> cmd = new ArrayList<String>();
 		cmd.add("java");
@@ -88,14 +89,6 @@ public class Daemon {
 		cmd.addAll(daemonArgs);
 		cmd.add("--");
 		cmd.addAll(appArgs);
-		
-		StringBuilder sb = new StringBuilder();
-		String sep = "";
-		for(String s : cmd) {
-			sb.append(sep).append(s);
-			sep = " ";
-		}
-		System.out.println(sb.toString());
 		
 		ProcessBuilder pb = new ProcessBuilder(cmd);
 		Process p = pb.start();
