@@ -55,9 +55,11 @@ public class Daemon {
 			return;
 		}
 		
-		System.setOut(new PrintStream(new DiscardingOutputStream()));
-		System.setErr(new PrintStream(new DiscardingOutputStream()));
 		System.setIn(new EmptyInputStream());
+		if(cli.hasOption(QUIET)) {
+			System.setOut(new PrintStream(new DiscardingOutputStream()));
+			System.setErr(new PrintStream(new DiscardingOutputStream()));
+		}
 		
 		if(cli.hasOption(STDIN))
 			System.setIn(new FileInputStream(cli.getOptionValue(STDIN)));
