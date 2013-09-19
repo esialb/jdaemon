@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.PosixParser;
@@ -37,6 +38,18 @@ public class Daemon {
 			return;
 		}
 		
+		Class<?> toolClass;
+		if(cli.hasOption(MAIN))
+			toolClass = Class.forName(cli.getOptionValue(MAIN));
+		else if(cli.hasOption(METAINF)) {
+			Properties ini = new Properties();
+			ini.load(Daemon.class.getClassLoader().getResourceAsStream("META-INF/jdaemon.ini"));
+			toolClass = Class.forName(ini.getProperty(MAIN));
+		} else {
+			System.out.println("Must specify either --" + MAIN + " or --" + METAINF);
+			return;
+		}
+
 		if(!cli.hasOption(FOREGROUND)) {
 			fork(vmArgs, daemonArgs, toolArgs);
 			return;
@@ -55,7 +68,6 @@ public class Daemon {
 		else if(cli.hasOption(STDERR))
 			System.setErr(new PrintStream(cli.getOptionValue(STDERR)));
 		
-		Class<?> toolClass = Class.forName(cli.getOptionValue(MAIN));
 		Method toolMain = toolClass.getMethod("main", String[].class);
 		toolMain.invoke(null, new Object[] { toolArgs.toArray(new String[0]) });
 	}

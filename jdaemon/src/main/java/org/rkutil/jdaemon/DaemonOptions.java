@@ -9,16 +9,18 @@ public class DaemonOptions extends Options {
 	public static final String STDIN = "std-in";
 	public static final String REDIRECT = "redirect";
 	public static final String MAIN = "main";
+	public static final String METAINF = "meta-inf";
 	public static final String HELP = "help";
 	
 	public DaemonOptions() {
-		addOption("f", "foreground", false, "run the daemon in the foreground (do not fork)");
-		addOption("o", "std-out", true, "file to write STDOUT to");
-		addOption("e", "std-err", true, "file to write STDERR to");
-		addOption("i", "std-in", true, "file to read STDIN from");
-		addOption("r", "redirect", false, "redirect STDERR to STDOUT");
-		addOption("m", "main", true, "class name of the main class");
-		addOption("h", "help", false, "show command-line usage");
+		addOption("f", FOREGROUND, false, "run the daemon in the foreground (do not fork)");
+		addOption("o", STDOUT, true, "file to write STDOUT to");
+		addOption("e", STDERR, true, "file to write STDERR to");
+		addOption("i", STDIN, true, "file to read STDIN from");
+		addOption("r", REDIRECT, false, "redirect STDERR to STDOUT");
+		addOption("m", MAIN, true, "class name of the main class");
+		addOption("M", METAINF, false, "read main class from META-INF/jdaemon.ini");
+		addOption("h", HELP, false, "show command-line usage");
 	}
 	
 	private static void p(String s) {
@@ -36,7 +38,8 @@ public class DaemonOptions extends Options {
 		p("          -e --std-err FILE          Write STDERR to FILE");
 		p("          -i --std-in FILE           Read STDIN from FILE");
 		p("          -f --redirect              Redirect STDERR to STDOUT (ignore -e if present)");
-		p("          -m --main CLASSNAME        Invoke CLASSNAME as the tool main class (REQUIRED)");
+		p("          -m --main CLASSNAME        Invoke CLASSNAME as the tool main class");
+		p("          -M --meta-inf              Invoke main class specified in META-INF/jdaemon.ini on the classpath");
 		p("          -h --help                  Show this help");
 		p("--:       --                         Separator to mark end of jdaemon args and beginning of tool args");
 		p("tool_arg: Arguments to the tool being launched");
