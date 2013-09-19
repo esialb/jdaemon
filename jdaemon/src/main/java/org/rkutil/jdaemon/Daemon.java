@@ -1,5 +1,6 @@
 package org.rkutil.jdaemon;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -107,6 +108,7 @@ public class Daemon {
 		System.out.println(sb.toString());
 
 		ProcessBuilder pb = new ProcessBuilder(cmd);
+		pb.directory(new File(System.getProperty("user.dir")));
 		Process p = pb.start();
 		p.getOutputStream().close();
 		p.getInputStream().close();
