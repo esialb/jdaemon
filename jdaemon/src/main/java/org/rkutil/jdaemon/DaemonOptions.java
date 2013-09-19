@@ -36,7 +36,7 @@ public class DaemonOptions extends Options {
 		p("          -e --std-err FILE          Write STDERR to FILE");
 		p("          -i --std-in FILE           Read STDIN from FILE");
 		p("          -f --redirect              Redirect STDERR to STDOUT (ignore -e if present)");
-		p("          -m --main CLASSNAME        Invoke CLASSNAME as the tool main class");
+		p("          -m --main CLASSNAME        Invoke CLASSNAME as the tool main class (REQUIRED)");
 		p("          -h --help                  Show this help");
 		p("--:       --                         Separator to mark end of jdaemon args and beginning of tool args");
 		p("tool_arg: Arguments to the tool being launched");

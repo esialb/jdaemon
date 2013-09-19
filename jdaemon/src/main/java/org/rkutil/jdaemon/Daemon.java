@@ -14,9 +14,6 @@ import org.apache.commons.cli.PosixParser;
 import static org.rkutil.jdaemon.DaemonOptions.*;
 
 public class Daemon {
-	
-	
-
 	public static void main(String[] s) throws Exception {
 		List<String> vmArgs = ManagementFactory.getRuntimeMXBean().getInputArguments();
 		List<String> daemonArgs = new ArrayList<String>();
@@ -33,7 +30,7 @@ public class Daemon {
 		
 		try {
 			cli = new PosixParser().parse(new DaemonOptions(), daemonArgs.toArray(new String[0]));
-			if(cli.hasOption(HELP))
+			if(cli.hasOption(HELP) || !cli.hasOption(MAIN))
 				throw new Exception("show help");
 		} catch(Exception ex) {
 			help();
