@@ -11,6 +11,7 @@ public class DaemonOptions extends Options {
 	public static final String REDIRECT = "redirect";
 	public static final String MAIN = "main";
 	public static final String METAINF = "meta-inf";
+	public static final String PIDFILE = "pid-file";
 	public static final String HELP = "help";
 	
 	public DaemonOptions() {
@@ -22,6 +23,7 @@ public class DaemonOptions extends Options {
 		addOption("r", REDIRECT, false, "redirect STDERR to STDOUT");
 		addOption("m", MAIN, true, "class name of the main class");
 		addOption("M", METAINF, false, "read main class from META-INF/jdaemon.ini");
+		addOption("p", PIDFILE, true, "file to write the tool PID to");
 		addOption("h", HELP, false, "show command-line usage");
 	}
 	
@@ -43,6 +45,7 @@ public class DaemonOptions extends Options {
 		p("          -f --redirect              Redirect STDERR to STDOUT (overrides -e)");
 		p("          -m --main CLASSNAME        Invoke CLASSNAME as the tool main class");
 		p("          -M --meta-inf              Invoke main class specified in META-INF/jdaemon.ini on the classpath");
+		p("          -p --pid-file FILE         Write the tool's PID to FILE");
 		p("          -h --help                  Show this help");
 		p("--:       --                         Separator to mark end of jdaemon args and beginning of tool args");
 		p("tool_arg: Arguments to the tool being launched");

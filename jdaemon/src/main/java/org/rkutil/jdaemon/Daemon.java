@@ -2,6 +2,7 @@ package org.rkutil.jdaemon;
 
 import java.io.FileInputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -52,6 +53,13 @@ public class Daemon {
 		if(!cli.hasOption(FOREGROUND)) {
 			fork(daemonArgs, toolArgs);
 			return;
+		}
+		
+		if(cli.hasOption(PIDFILE)) {
+			String pid = ManagementFactory.getRuntimeMXBean().getName().replaceAll("[^\\d].*", "");
+			PrintStream pidfile = new PrintStream(cli.getOptionValue(PIDFILE));
+			pidfile.println(pid);
+			pidfile.close();
 		}
 		
 		System.setIn(new EmptyInputStream());
