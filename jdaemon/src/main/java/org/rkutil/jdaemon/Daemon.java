@@ -31,7 +31,7 @@ public class Daemon {
 		
 		try {
 			cli = new PosixParser().parse(new DaemonOptions(), daemonArgs.toArray(new String[0]));
-			if(cli.hasOption(HELP) || !cli.hasOption(MAIN))
+			if(cli.hasOption(HELP) || (!cli.hasOption(MAIN) && !cli.hasOption(METAINF)))
 				throw new Exception("show help");
 		} catch(Exception ex) {
 			help();
